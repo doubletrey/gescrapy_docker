@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  gerapy:
+    image: germey/gerapy:latest
+    container_name: gerapy
+    networks:
+      - scrapy_networks
+    ports:
+    - 8000:8000
+  scrapyd:
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+#    build:
+#      context: ./scrapyd
+#      dockerfile: Dockerfile
+    image: doubletrey2/scrapyd:v2
+    networks:
+      - scrapy_networks
+
+networks:
+  scrapy_networks:
